@@ -1,0 +1,20 @@
+#form1
+{
+    padding-top: 25px;
+    align-items: center;
+    text-align: center;
+    padding: 5px;
+    height: 26em;
+    width: 15em;
+    border-radius: 5%;
+    background: aliceblue;
+    opacity: 0.7;
+    position: absolute;
+    z-index: 999;
+    left: 50%;
+    top: 15em;
+    transform: translate(-50%, 0);
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+}

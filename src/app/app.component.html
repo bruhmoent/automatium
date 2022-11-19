@@ -1,11 +1,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Sono&family=Ubuntu:wght@300&display=swap"
-  rel="stylesheet"
-/>
+<link href="https://fonts.googleapis.com/css2?family=Sono&family=Ubuntu:wght@300&display=swap" rel="stylesheet" />
 
-<section id="header"><h1>Automat</h1></section>
+
+<section id="header">
+  <h1>Automat</h1>
+</section>
 
 <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" />
 <label for="openSidebarMenu" class="sidebarIconToggle">
@@ -13,23 +13,52 @@
   <div class="spinner horizontal"></div>
   <div class="spinner diagonal part-2"></div>
 </label>
+
 <div id="sidebarMenu">
   <ul class="sidebarMenuInner">
+
     <li><button (click)="myFunc()">Wyswietl karty</button></li>
     <li>
-      <button (click)="addCard()">Dodaj karte</button>
+      <a routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">Dodaj karte</a>
     </li>
     <li><button (click)="withdrawCard()">Doladuj karte</button></li>
+    <li> <a routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">addcard</a></li>
+
   </ul>
 </div>
 
-<div class="pageWrapper space">
-  <ng-container *ngFor="let item of cards">
-    <div style="display: flex;align-items: center;">
-      <p>{{ item.name }}</p>
-      <p>{{ item.amount }}</p>
-    </div>
-  </ng-container>
-</div>
 
+<div class="pageWrapper space" id="bolok">
+  <ng-container *ngFor="let item of cards">
+    <ul
+      style="display: flex;align-items: center;flex-direction: row; list-style-type: none;border: solid 1px silver;padding: 10px; border-radius: 4%;">
+      <li style="margin-right: 5px;">{{ item.name }}</li>
+      <li>{{ item.amount }}</li>
+    </ul>
+
+  </ng-container>
+  <div ng-if="hasCards()">
+    <a ng-if="hasCards()" id="addcardlink" routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">({{cards.length}}) Dodaj następna</a>
+  </div>
+
+</div>
 <div id="automatContainer"></div>
+<!-- 
+<div id="automatContainer"></div>
+<button (click)="router.navigate(['/addCard']);">
+  <span>Go to master Page</span>
+</button>
+
+<h1>Angular Router</h1>
+<nav>
+  <a routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">addcard</a>
+
+</nav>
+<router-outlet></router-outlet> -->
+<!-- <form><button type="button" routerLink="/addcard">Go to sidekicks</button></form> -->
+
+<nav>
+  <!-- <a routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">addcard</a> -->
+
+</nav>
+<router-outlet></router-outlet>

@@ -2,11 +2,13 @@
     "cards1": [
       {
         "name": "visa",
-        "amount": 500
+        "amount": 500,
+        "msg":"" 
       },
       {
         "name": "mc",
-        "amount": 40
+        "amount": 40,
+        "msg":"" 
       }
     ]
   }

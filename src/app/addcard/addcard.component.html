@@ -1,0 +1,16 @@
+<head>
+    <meta charset=”utf-8″/>
+</head>
+<div id="form1">
+<form [formGroup]="checkoutForm" (ngSubmit)="saveCard()" >
+    <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">X</a>
+    <p>Nazwa karty</p>
+    <input type="text" placeholder="Karta" formControlName="name" required>
+    <p>Saldo</p>
+    <input type="number" placeholder="0$" formControlName="amount" required>
+    <br> <br>
+    <button type="submit">Przeslij karte</button>
+    <br> <br>
+
+</form>
+</div>

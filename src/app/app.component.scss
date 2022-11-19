@@ -1,9 +1,20 @@
 * {
   font-family: 'Sono', sans-serif;
 }
-
 h1 {
   text-align: center;
+}
+#bolok
+{
+  position: relative;
+  z-index: 1;
+  border-radius: 5%;
+  background: aliceblue;
+  opacity: 0.7;
+  width: 100%;
+  height: 6em;
+  margin-bottom: 1em;
+  overflow: scroll;
 }
 button {
   color: white;
@@ -11,7 +22,18 @@ button {
   border-radius: 15%;
   cursor: pointer;
 }
+.pageWrapper space
+{
+  overflow: scroll;
+  position: relative;
+  border-radius: 10%;
+  left: 50%;
+  transform: translate(-50%, 10%);
+  align-items: center;
+}
 #header {
+  position: relative;
+  z-index: 10;
   margin-bottom: 15px;
   float: left;
   background-color: #171717;
