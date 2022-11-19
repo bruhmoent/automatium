@@ -1,0 +1,13 @@
+{
+    "cards1": [
+      {
+        "name": "visa",
+        "amount": 500
+      },
+      {
+        "name": "mc",
+        "amount": 40
+      }
+    ]
+  }
+  

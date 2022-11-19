@@ -1,0 +1,35 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sono&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+<section id="header"><h1>Automat</h1></section>
+
+  <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+  <label for="openSidebarMenu" class="sidebarIconToggle">
+    <div class="spinner diagonal part-1"></div>
+    <div class="spinner horizontal"></div>
+    <div class="spinner diagonal part-2"></div>
+  </label>
+  <div id="sidebarMenu">
+    <ul class="sidebarMenuInner">
+      <li> <button (click)="myFunc()">Wyswietl karty</button></li>
+      <li> <button (click)="addCard()">Dodaj karte</button></li>
+      <li> <button (click)="withdrawCard()">Wyplac</button></li>
+    </ul>
+  </div>
+  <div id="content">
+    <button (click)="myFunc()">w</button>
+    <p>{{msg}}</p>
+    <button (click)="addCard()">Dodaj</button>
+    <button (click)="withdrawCard()">Withdraw</button>
+    <div class="pageWrapper space">
+      <ng-container *ngFor="let item of cards">
+        <div style="display: flex;align-items: center;">
+          <p>{{ item.name }}</p>
+          <p>{{ item.amount }}</p>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <section id="automat">
+    
+  </section>
