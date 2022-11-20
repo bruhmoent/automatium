@@ -1,0 +1,19 @@
+<head>
+    <meta charset=”utf-8″ />
+</head>
+<div id="form2">
+    <form [formGroup]="checkoutForm2" (ngSubmit)="saveCard2()" ngNativeValidate>
+        <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">X</a>
+        <p>Nazwa karty</p>
+        
+        <input type="text" placeholder="Karta" formControlName="name2" required>
+        <br> <br>
+        <p>Dodaj saldo</p>
+        <input type="number" placeholder="0$" formControlName="amount2" required>
+        <br> <br>
+        <button type="submit">Aktualizuj karte</button>
+        <br> <br>
+    </form>
+
+    <span class="error">{{msg}}</span>
+</div>

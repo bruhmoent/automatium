@@ -1,12 +1,12 @@
 {
     "cards1": [
       {
-        "name": "visa",
+        "name": "Visa",
         "amount": 500,
         "msg":"" 
       },
       {
-        "name": "mc",
+        "name": "MasterCard",
         "amount": 40,
         "msg":"" 
       }

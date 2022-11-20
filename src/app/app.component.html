@@ -1,10 +1,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sono&family=Ubuntu:wght@300&display=swap" rel="stylesheet" />
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 <section id="header">
-  <h1>Automat</h1>
+  <h1>Automatium</h1>
 </section>
 
 <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" />
@@ -16,49 +16,45 @@
 
 <div id="sidebarMenu">
   <ul class="sidebarMenuInner">
-
-    <li><button (click)="myFunc()">Wyswietl karty</button></li>
     <li>
       <a routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">Dodaj karte</a>
     </li>
-    <li><button (click)="withdrawCard()">Doladuj karte</button></li>
-    <li> <a routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">addcard</a></li>
+    <li> <a routerLink="/add-funds" routerLinkActive="active" ariaCurrentWhenActive="page">Doladuj karte</a></li>
 
   </ul>
 </div>
 
-
 <div class="pageWrapper space" id="bolok">
-  <ng-container *ngFor="let item of cards">
-    <ul
-      style="display: flex;align-items: center;flex-direction: row; list-style-type: none;border: solid 1px silver;padding: 10px; border-radius: 4%;">
-      <li style="margin-right: 5px;">{{ item.name }}</li>
-      <li>{{ item.amount }}</li>
-    </ul>
+    <!-- <ng-container *ngFor="let item of cards">
+      {{ item.name }}
+    </ng-container> -->
 
-  </ng-container>
-  <div ng-if="hasCards()">
-    <a ng-if="hasCards()" id="addcardlink" routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">({{cards.length}}) Dodaj następna</a>
+  <div >
+    <p-carousel [ngClass]="{'style85881':isNeedUpdate()}" ng-if="isNeedUpdate()" [value]="cards" [numVisible]="4" [numScroll]="4" [responsiveOptions]="responsiveOptions">
+
+      <ng-template let-card pTemplate="item">
+        <div class="card-item" [ngClass]="{'card-item-selected':isSelectedCard(card)}">
+          <div class="card-item-content" [ngClass]="{'card-item-content-selected':isSelectedCard(card)}">
+            <div class="p-mb-3">
+            </div>
+            <div>
+              <h4 class="p-mb-1">{{card.name}}</h4>
+              <h6 class="p-mt-0 p-mb-3">${{card.amount}}</h6>
+              <div class="chip"></div>
+              <div [hidden]="!isSelectedCard(card)"></div>
+              <div class="car-buttons p-mt-5">
+                <p-button type="button" (click)="selectCard(card)"  styleClass="p-button-success p-button-rounded p-mr-2" icon="pi pi-star">
+                </p-button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
   </div>
-
 </div>
+
 <div id="automatContainer"></div>
-<!-- 
-<div id="automatContainer"></div>
-<button (click)="router.navigate(['/addCard']);">
-  <span>Go to master Page</span>
-</button>
 
-<h1>Angular Router</h1>
-<nav>
-  <a routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">addcard</a>
-
-</nav>
-<router-outlet></router-outlet> -->
-<!-- <form><button type="button" routerLink="/addcard">Go to sidekicks</button></form> -->
-
-<nav>
-  <!-- <a routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">addcard</a> -->
-
-</nav>
 <router-outlet></router-outlet>
