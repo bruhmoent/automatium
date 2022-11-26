@@ -18,6 +18,10 @@ import {ToastModule} from 'primeng/toast';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 import {DialogModule} from 'primeng/dialog';
 import { InputTextModule } from "primeng/inputtext";
+import {InplaceModule} from 'primeng/inplace';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {InputNumberModule} from 'primeng/inputnumber';
 const appRoutes: Routes = [
   { path: 'addcard', component: AddcardComponent },
   { path: 'add-funds', component:  AddFundsComponent }
@@ -32,6 +36,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     HttpClientModule,
+    MessagesModule,
+    MessageModule,
     FormsModule,
     MatButtonModule,
     MatIconModule,
@@ -43,6 +49,8 @@ const appRoutes: Routes = [
     DynamicDialogModule,
     DialogModule,
     InputTextModule,
+    InplaceModule,
+    InputNumberModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
@@ -54,6 +62,6 @@ const appRoutes: Routes = [
 
 })
 export class AppModule {
- 
+  
 
 }

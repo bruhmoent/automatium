@@ -9,12 +9,15 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from "primeng/inputtext";
 import { Card } from './card';
+import { Message, MessageService } from 'primeng/api';
+import { PrimeNGConfig } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [DialogService]
+  providers: [DialogService, MessageService]
 })
 export class AppComponent {
   title = 'angularproject1';
@@ -28,8 +31,12 @@ export class AppComponent {
   needUpdate: boolean = false;
   display: boolean = false;
   selectedCard: any;
+  messageDelete: string = "";
+  msgs1: Message[];
+  amount: any;
 
-  constructor(private clientService: ClientService, private router2: Router, public dialogService: DialogService) {
+
+  constructor(private clientService: ClientService, private router2: Router, public dialogService: DialogService, private messageService: MessageService, private primengConfig: PrimeNGConfig) {
     clientService.getMessage();
     clientService.loadCards();
     this.router = router2;
@@ -49,6 +56,14 @@ export class AppComponent {
         numVisible: 1,
         numScroll: 1
       }
+    ];
+
+    this.msgs1 = [
+      { severity: 'success', summary: 'Success', detail: 'Message Content' },
+      { severity: 'info', summary: 'Info', detail: 'Message Content' },
+      { severity: 'warn', summary: 'Warning', detail: 'Message Content' },
+      { severity: 'error', summary: 'Error', detail: 'Message Content' },
+      { severity: 'custom', summary: 'Custom', detail: 'Message Content', icon: 'pi-file' }
     ];
   }
 
@@ -84,6 +99,8 @@ export class AppComponent {
     })
 
     console.log('--- kart :: ', this.cards);
+
+
   }
 
   showDialog() {
@@ -92,11 +109,17 @@ export class AppComponent {
 
   selectCard(card: any) {
     this.selectedCard = card;
-    console.log('--- selectedCard :: ', this.selectedCard);
+    this.amount = this.selectedCard.amount;
+    this.selectedCard.balance = this.selectedCard.amount;
   }
 
   isSelectedCard(card: any) {
     return this.selectedCard == card;
+  }
+
+  isSelectCard() {
+    //console.log('--- karta zaznaczona :: ', this.selectedCard != null );
+    return this.selectedCard != null;
   }
 
   addCards(c: Card) {
@@ -113,7 +136,51 @@ export class AppComponent {
     this.needUpdate = val;
   }
 
-  isNeedUpdate(){
+  isNeedUpdate() {
     return this.needUpdate;
+  }
+
+  delCard(card: any) {
+    console.log(card);
+
+    if (card != null) {
+      if (this.cards.length <= 1) {
+        this.messageDelete = "Pozostała jedna karta, nie można usunąć";
+        this.messageService.add({ severity: 'error', summary: 'Manadżer Kart', detail: this.messageDelete, life: 2000 });
+        return;
+      }
+      let indexC = this.cards.indexOf(card, 0);
+      console.log("indexC=" + indexC);
+      if (indexC > -1) {
+        this.cards.splice(indexC, 1);
+      }
+    }
+  }
+
+  saveCard() {
+    console.log("Karta do zapisu:" + this.amount);
+
+    if (this.selectedCard != null) {
+      if(this.selectedCard.balance < 0)
+      {
+        this.messageDelete = "Saldo nie może być ujemne";
+        this.messageService.add({ severity: 'error', summary: 'Manadżer Kart', detail: this.messageDelete, life: 2000 });
+        return;
+      }
+      this.selectedCard.amount = this.selectedCard.balance;
+      console.log("Zapisano do karty");
+      //this.selectedCard.amount = this.amount;
+      this.selectedCard = null;
+    }
+
+  }
+
+  cancelSaveCard()
+  {
+    if (this.selectedCard != null) 
+    {
+      this.selectedCard.balance = this.selectedCard.amount;
+      this.selectedCard = null;
+    }
   }
 }
