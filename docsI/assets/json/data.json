@@ -1,0 +1,18 @@
+{
+  "cards1": [
+    {
+      "name": "Visa",
+      "amount": 500,
+      "msg": "",
+      "balance": 500,
+      "pin": "1234"
+    },
+    {
+      "name": "MasterCard",
+      "amount": 50,
+      "msg": "",
+      "balance": 50,
+      "pin": "1234"
+    }
+  ]
+}
