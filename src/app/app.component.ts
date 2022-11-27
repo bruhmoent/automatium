@@ -12,6 +12,7 @@ import { Card } from './card';
 import { Message, MessageService } from 'primeng/api';
 import { PrimeNGConfig } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -34,9 +35,15 @@ export class AppComponent {
   messageDelete: string = "";
   msgs1: Message[];
   amount: any;
+  withDrawMoneyStep: number = 0;
+  pin: string = "";
 
-
-  constructor(private clientService: ClientService, private router2: Router, public dialogService: DialogService, private messageService: MessageService, private primengConfig: PrimeNGConfig) {
+  constructor(private clientService: ClientService,
+    private router2: Router,
+    public dialogService: DialogService,
+    private messageService: MessageService,
+    private primengConfig: PrimeNGConfig,
+    private formBuilder: FormBuilder) {
     clientService.getMessage();
     clientService.loadCards();
     this.router = router2;
@@ -67,12 +74,11 @@ export class AppComponent {
     ];
   }
 
+  checkoutForm2 = this.formBuilder.group({
+    pin: ''
+  });
+
   loadCards() {
-    // console.log('--- clickss :: ', "abc");
-    // this.clientService.loadCards();
-    // console.log('--- clickss2 :: ', "abc");
-    // this.cards = this.clientService.getCards();
-    // console.log('--- clickss3 :: ', "abc");
     return this.cards;
   }
 
@@ -108,6 +114,7 @@ export class AppComponent {
   }
 
   selectCard(card: any) {
+    this.withDrawMoneyStep = 0;
     this.selectedCard = card;
     this.amount = this.selectedCard.amount;
     this.selectedCard.balance = this.selectedCard.amount;
@@ -118,7 +125,6 @@ export class AppComponent {
   }
 
   isSelectCard() {
-    //console.log('--- karta zaznaczona :: ', this.selectedCard != null );
     return this.selectedCard != null;
   }
 
@@ -146,7 +152,7 @@ export class AppComponent {
     if (card != null) {
       if (this.cards.length <= 1) {
         this.messageDelete = "Pozostała jedna karta, nie można usunąć";
-        this.messageService.add({ severity: 'error', summary: 'Manadżer Kart', detail: this.messageDelete, life: 2000 });
+        this.messageService.add({ severity: 'error', summary: 'Menedżer Kart', detail: this.messageDelete, life: 2000 });
         return;
       }
       let indexC = this.cards.indexOf(card, 0);
@@ -155,16 +161,17 @@ export class AppComponent {
         this.cards.splice(indexC, 1);
       }
     }
+
+    this.selectedCard = null;
   }
 
   saveCard() {
     console.log("Karta do zapisu:" + this.amount);
 
     if (this.selectedCard != null) {
-      if(this.selectedCard.balance < 0)
-      {
+      if (this.selectedCard.balance < 0) {
         this.messageDelete = "Saldo nie może być ujemne";
-        this.messageService.add({ severity: 'error', summary: 'Manadżer Kart', detail: this.messageDelete, life: 2000 });
+        this.messageService.add({ severity: 'error', summary: 'Menedżer Kart', detail: this.messageDelete, life: 2000 });
         return;
       }
       this.selectedCard.amount = this.selectedCard.balance;
@@ -175,12 +182,64 @@ export class AppComponent {
 
   }
 
-  cancelSaveCard()
-  {
-    if (this.selectedCard != null) 
-    {
+  cancelSaveCard() {
+    if (this.selectedCard != null) {
       this.selectedCard.balance = this.selectedCard.amount;
       this.selectedCard = null;
+      this.pin = "";
+    }
+  }
+
+  hideEmptyCashMachine() {
+    return this.selectedCard == null || this.withDrawMoneyStep != 0;
+  }
+
+  hidePinCashMachine() {
+    return this.selectedCard == null || this.withDrawMoneyStep != 1;
+  }
+
+  hideAmountCashMachine() {
+    return this.selectedCard == null || this.withDrawMoneyStep != 2;
+  }
+
+  hideLastStageCashMachine() {
+    return this.selectedCard == null || this.withDrawMoneyStep != 3;
+  }
+
+  withDraw() {
+    this.withDrawMoneyStep = 1;
+    this.pin = "";
+  }
+
+  cancelWithDraw() {
+    this.withDrawMoneyStep = 0;
+    this.pin = "";
+  }
+
+  checkPin() {
+    console.log("Pin karty: " + this.selectedCard.pin);
+    console.log("Pin ts: " + this.pin);
+
+    if (this.selectedCard.pin == this.pin) {
+      this.withDrawMoneyStep = 2;
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Menedżer Kart', detail: "Niepoprawny pin", life: 2000 });
+      return;
+    }
+  }
+
+  withDrawMoney(amount: number) {
+    console.log("Kwota na karcie: " + this.selectedCard.amount);
+    console.log("Wypłacana kwota: " + amount);
+    this.pin = "";
+
+    if (this.selectedCard.amount >= amount) {
+      this.selectedCard.amount = this.selectedCard.amount - amount;
+      this.selectedCard.balance = this.selectedCard.amount;
+      this.withDrawMoneyStep = 3;
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Menedżer Kart', detail: "Niewystarczające środki na karcie", life: 2000 });
+      return;
     }
   }
 }

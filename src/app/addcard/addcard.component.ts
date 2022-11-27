@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class AddcardComponent {
   name: string = "";
   amount: number = 0;
+  pin: string = "";
 
   constructor(
     private clientService: ClientService,
@@ -26,7 +27,8 @@ export class AddcardComponent {
 
   checkoutForm = this.formBuilder.group({
     name: '',
-    amount: ''
+    amount: '',
+    pin: ''
   });
 
   saveCard() {
@@ -40,7 +42,7 @@ export class AddcardComponent {
     let card = new Card();
     card.name = this.name;
     card.amount = this.amount;
-
+    card.pin = this.pin;
     this.clientService.addCards(card);
 
     this.appComponent.setCards(this.clientService.cards);

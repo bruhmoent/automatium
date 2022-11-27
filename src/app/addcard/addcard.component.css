@@ -8,11 +8,11 @@
     width: 15em;
     border-radius: 5%;
     background: aliceblue;
-    opacity: 0.7;
+    opacity: 1;
     position: absolute;
     z-index: 999;
     left: 50%;
-    top: 28em;
+    top: 29em;
     transform: translate(-50%, 0);
     -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
   -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);

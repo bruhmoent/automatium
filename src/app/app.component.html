@@ -1,10 +1,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Sono&family=Ubuntu:wght@300&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
 
 <section id="header">
-  <h1>Automatium</h1>
+  <div class="wrapper">
+    <h1>Automatium</h1>
+  </div>
 </section>
 
 <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu" />
@@ -19,19 +22,13 @@
     <li>
       <a routerLink="/addcard" routerLinkActive="active" ariaCurrentWhenActive="page">Dodaj karte</a>
     </li>
-    <li> <a routerLink="/add-funds" routerLinkActive="active" ariaCurrentWhenActive="page">Doladuj karte</a></li>
-
   </ul>
 </div>
-<p-toast position="top-right" ></p-toast>
+<p-toast position="top-right"></p-toast>
 <div class="pageWrapper space" id="bolok">
-    <!-- <ng-container *ngFor="let item of cards">
-      {{ item.name }}
-    </ng-container> -->
-
-  <div >
-
-    <p-carousel [ngClass]="{'style85881':isNeedUpdate()}" ng-if="isNeedUpdate()" [value]="cards" [numVisible]="4" [numScroll]="4" [responsiveOptions]="responsiveOptions">
+  <div>
+    <p-carousel [ngClass]="{'style85881':isNeedUpdate()}" ng-if="isNeedUpdate()" [value]="cards" [numVisible]="4"
+      [numScroll]="4" [responsiveOptions]="responsiveOptions">
 
       <ng-template let-card pTemplate="item">
         <div class="card-item" [ngClass]="{'card-item-selected':isSelectedCard(card)}">
@@ -40,30 +37,34 @@
             </div>
             <div>
               <h4 class="p-mb-1">{{card.name}}</h4>
-              <h6 class="p-mt-0 p-mb-3" >
-                <p-inplace  [hidden]="!isSelectedCard(card)">
+              <h6 class="p-mt-0 p-mb-3">
+                <p-inplace [hidden]="!isSelectedCard(card)">
                   <ng-template pTemplate="display">
                     ${{card.amount}}
                   </ng-template>
                   <ng-template pTemplate="content">
-                      <!-- <input type="text" [(ngModel)]="card.balance" size="5" pInputText> -->
-                      <p-inputNumber [(ngModel)]="card.balance" mode="currency" currency="USD" locale="en-US" [minFractionDigits]="2" [min]="0"></p-inputNumber>
-                      <p-button type="button" (click)="saveCard()" style="margin-left: 0.5em; display: inline;" styleClass="p-button-rounded p-button-info p-mr-2" icon="pi pi-save"></p-button>
-                      <p-button type="button" (click)="cancelSaveCard()" styleClass="p-button-rounded p-button-warning p-mr-2" icon="pi pi-times"></p-button>
+                    <p-inputNumber [(ngModel)]="card.balance" mode="currency" currency="USD" locale="en-US"
+                      [minFractionDigits]="2" [min]="0"></p-inputNumber>
+                    <p-button type="button" (click)="saveCard()" style="margin-left: 0.5em; display: inline;"
+                      styleClass="p-button-rounded p-button-info p-mr-2" icon="pi pi-save"></p-button>
+                    <p-button type="button" (click)="cancelSaveCard()"
+                      styleClass="p-button-rounded p-button-danger p-mr-2" icon="pi pi-times"></p-button>
                   </ng-template>
-              </p-inplace>
-               </h6>
-               <h6 class="p-mt-0 p-mb-3" [hidden]="isSelectedCard(card)">
+                </p-inplace>
+              </h6>
+              <h6 class="p-mt-0 p-mb-3" [hidden]="isSelectedCard(card)">
                 ${{card.amount}}
-                </h6>
+              </h6>
               <div class="chip"></div>
               <div [hidden]="!isSelectedCard(card)"></div>
               <div class="car-buttons p-mt-5">
-                <p-button type="button" (click)="selectCard(card)"  styleClass="p-button-success p-button-rounded p-mr-2" icon="pi pi-star">
+                <p-button type="button" (click)="selectCard(card)" styleClass="p-button-warning p-button-rounded p-mr-2"
+                  icon="pi pi-heart">
                 </p-button>
-                <p-button type="button" (click)="delCard(card)"  styleClass="p-button-danger p-button-rounded p-mr-2" icon="pi pi-trash">
+                <p-button type="button" (click)="delCard(card)" styleClass="p-button-secondary p-button-rounded p-mr-2"
+                  icon="pi pi-trash">
                 </p-button>
-                
+
               </div>
 
             </div>
@@ -74,6 +75,54 @@
   </div>
 </div>
 
-<div id="automatContainer"></div>
+<div id="automatContainer">
+  <div class="emptyCashMachine" [hidden]="hideEmptyCashMachine()">
+    <p-button type="button" (click)="withDraw()" style="opacity: 0.9;" styleClass="p-button-info p-mr-2" icon="pi pi-money-bill"
+      label="Wypłać"></p-button>
+  </div>
+  <div class="pinCashMachine" [hidden]="hidePinCashMachine()">
+    <form [formGroup]="checkoutForm2" (ngSubmit)="saveCard()" ngNativeValidate>
+      <div class="p-fluid grid" style="display: flex; flex-direction: row;">
+        <div class="field col-12 md:col-4">
+          <span class="p-float-label" style="margin: 20px">
+            <input type="password" size="8" id="password" pInputText formControlName="pin" [(ngModel)]="pin">
+            <label for="inputtext">Pin</label>
+          </span>
+        </div>
+      </div>
+      <div id="marginHolder">
+      <p-button type="button" (click)="cancelWithDraw()" styleClass="p-button-danger p-button-rounded p-mr-2"
+        icon="pi pi-times-circle"></p-button>
+        <p-button type="button" (click)="checkPin()" styleClass="p-button-warning p-button-rounded p-mr-2" icon="pi pi-arrow-circle-right"></p-button>
+      </div>
+    </form>
+  </div>
+  <div class="amountCashMachine" [hidden]="hideAmountCashMachine()">
+    <div class="cash1" style="display: flex;">
+      <div  style="justify-content: flex-start; margin-top: 0.5em; display: flex; flex-direction: column; row-gap: 10px;">
+        <p-button type="button" (click)="withDrawMoney(50)" styleClass="p-button-secondary p-button-rounded p-mr-2"  label="50⠀"></p-button>
+        <p-button type="button" (click)="withDrawMoney(100)" styleClass="p-button-secondary p-button-rounded p-mr-2"  label="100"></p-button>
+        <p-button type="button" (click)="withDrawMoney(150)" styleClass="p-button-secondary p-button-rounded p-mr-2"  label="150"></p-button>
+      </div>
+      <div style="justify-content: flex-end; margin-left: 2em;margin-top: 0.5em;display: flex; flex-direction: column; row-gap: 10px;">
+        <p-button type="button" (click)="withDrawMoney(200)" styleClass="p-button-secondary p-button-rounded p-mr-2"  label="200"></p-button>
+        <p-button type="button" (click)="withDrawMoney(250)" styleClass="p-button-secondary p-button-rounded p-mr-2"  label="250"></p-button>
+        <p-button type="button" (click)="withDrawMoney(500)" styleClass="p-button-secondary p-button-rounded p-mr-2"  label="500"></p-button>
+      </div>
+    </div>
+    <p-button type="button" (click)="cancelWithDraw()" style="margin-left: 4.5em; " styleClass="p-button-danger p-button-rounded p-mr-2" icon="pi pi-times-circle"></p-button>
+  </div>
+  <div class="lastStepCashMachine" [hidden]="hideLastStageCashMachine()">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <h3 class="animate-charcter"> Dziękujemy</h3>
+        </div>
+      </div>
+    </div>
+    <p-button type="button" (click)="cancelWithDraw()" style="position: relative; top: -1em;" styleClass="p-button-danger p-button-rounded p-mr-2"
+      icon="pi pi-times-circle"></p-button>
+  </div>
+</div>
 
 <router-outlet></router-outlet>

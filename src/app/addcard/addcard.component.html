@@ -1,33 +1,37 @@
 <head>
     <meta charset=”utf-8″/>
+    <style>
+        a { text-decoration: none; }
+      </style>
 </head>
 <div id="form1">
     
 <form [formGroup]="checkoutForm" (ngSubmit)="saveCard()" ngNativeValidate>
-    <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">X</a>
+    <p></p>
+    <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page"> <p-button type="button" styleClass="p-button-danger p-button-rounded p-mr-2" icon="pi pi-times-circle"></p-button></a>
 
     <div class="p-fluid grid" style="display: flex; flex-direction: column;">
         <div class="field col-12 md:col-4">
             <span class="p-float-label" style="margin: 20px">
-                <input type="text" id="inputtext" pInputText formControlName="name" [(ngModel)]="name"> 
+                <input type="text" id="inputtext" pInputText formControlName="name" [(ngModel)]="name" required> 
                 <label for="inputtext">Karta</label>
             </span>
         </div>
         <div class="field col-12 md:col-4">
             <span class="p-float-label"  style="margin: 20px">
             
-                <input type="number" id="inputtext-left" pInputText formControlName="amount" [(ngModel)]="amount"> 
+                <input type="number" id="inputtext-left" pInputText formControlName="amount" [(ngModel)]="amount" required> 
                 <label for="inputtext-left">Saldo</label>
             </span>
         </div>
+        <div class="field col-12 md:col-4">
+            <span class="p-float-label" style="margin: 20px">
+              <input type="password" id="password" size="4" pInputText formControlName="pin" [(ngModel)]="pin" required>
+              <label for="inputtext">Pin</label>
+            </span>
+          </div>
     </div>
-
-    <!-- <p>Nazwa karty</p>
-    <input type="text" placeholder="Karta" formControlName="name" pInputText required>
-    <br> <br>
-    <p>Saldo</p>
-    <input type="number" placeholder="0$" formControlName="amount" pInputText required> -->
-    <br> <br>
+    
     <button pButton type="submit">Przeslij karte</button>
     <br> <br>
 

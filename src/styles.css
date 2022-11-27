@@ -1,4 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: gray;
+}
+
+.p-carousel {
+    background-color: #d1ce29 !important;
+}
+
+.p-carousel-dot-item {
+    background-color: #d1aa29 !important;
+}
+
+.p-link {
+    background-color: purple !important;
+}
+
+.ui-carousel {
+    width: 100%;
+}
+
+.ui-carousel-item {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    height: 250px;
+}
+
+.ui-carousel-items {
+    width: 100%;
+}   
+
+.ui-carousel-viewport {
+    width: 100%;
+}
+
+.ui-carousel-header {
+    background-color: #ee2525;
+}
+.p-link {
+    background-color: #ee2525 !important;
+}

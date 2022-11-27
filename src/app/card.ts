@@ -1,7 +1,7 @@
 export class Card {
     name: string = "";
     amount: number = 0;
-
+    pin: string = "";
     public toIndexString(p:Card):String {
         return Card.pointToIndexString(p.name, p.amount);  
     }       
